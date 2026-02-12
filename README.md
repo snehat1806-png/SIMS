@@ -1,4 +1,8 @@
+
 # Student Information Management System
+
+# SIMS[Student Information Management System]
+
 
 A comprehensive system for managing student information efficiently.
 
@@ -9,6 +13,13 @@ A comprehensive system for managing student information efficiently.
 - CRUD operations
 - Attendance tracking
 - Report generation
+
+
+- Attendance tracking
+- Report generation
+
+## Getting Started
+
 
 ### Prerequisites
 - Python 3.x
@@ -38,5 +49,9 @@ Feel free to fork this project and submit pull requests.
 
 ## Author
 Created for efficient student information management.
+
+## License
+This project is open source and available under the MIT License.
+
 
 
