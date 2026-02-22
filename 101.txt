@@ -1,0 +1,8 @@
+ID:101
+Name:cc
+Dept:cse
+Year:2
+Email:sne124@gmail.com
+Phone:7890865432
+Status:ACTIVE
+LastUpdated:2026-02-10 01:11:20.375488
