@@ -1,6 +1,3 @@
-
-# Student Information Management System
-
 # SIMS[Student Information Management System]
 
 
@@ -52,6 +49,7 @@ Created for efficient student information management.
 
 ## License
 This project is open source and available under the MIT License.
+
 
 
 
