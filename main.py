@@ -1,20 +1,25 @@
 import json
 from datetime import datetime
 
-DATA_FOLDER = "StudentData"
-DELETED_FOLDER = "DeletedStudents"
+FILE_NAME = "students.json"
 
-# Create folders if not exist
-for folder in [DATA_FOLDER, DELETED_FOLDER]:
-    if not os.path.exists(folder):
-        os.mkdir(folder)
 
-def get_next_id():
-    files = os.listdir(DATA_FOLDER)
-    if not files:
-        return 101
-    ids = [int(f.split(".")[0]) for f in files]
-    return max(ids) + 1
+# ----------------- File Handling -----------------
+
+def load_data():
+    try:
+        with open(FILE_NAME, "r") as file:
+            return json.load(file)
+    except:
+        return []
+
+
+def save_data(data):
+    with open(FILE_NAME, "w") as file:
+        json.dump(data, file, indent=4)
+
+
+# ----------------- Validation -----------------
 
 def validate_email(email):
     return "@" in email and "." in email
