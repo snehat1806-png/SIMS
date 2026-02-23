@@ -1,34 +1,50 @@
-import os
+import json
 from datetime import datetime
 
-DATA_FOLDER = "StudentData"
-DELETED_FOLDER = "DeletedStudents"
+FILE_NAME = "students.json"
 
-# Create folders if not exist
-for folder in [DATA_FOLDER, DELETED_FOLDER]:
-    if not os.path.exists(folder):
-        os.mkdir(folder)
 
-def get_next_id():
-    files = os.listdir(DATA_FOLDER)
-    if not files:
-        return 101
-    ids = [int(f.split(".")[0]) for f in files]
-    return max(ids) + 1
+# ----------------- File Handling -----------------
+
+def load_data():
+    try:
+        with open(FILE_NAME, "r") as file:
+            return json.load(file)
+    except:
+        return []
+
+
+def save_data(data):
+    with open(FILE_NAME, "w") as file:
+        json.dump(data, file, indent=4)
+
+
+# ----------------- Validation -----------------
 
 def validate_email(email):
     return "@" in email and "." in email
 
+
 def validate_phone(phone):
     return phone.isdigit() and len(phone) == 10
+
 
 def validate_year(year):
     return year.isdigit() and 1 <= int(year) <= 4
 
-# ---------- Core Features ----------
+
+# ----------------- Core Features -----------------
+
+def get_next_id(students):
+    if not students:
+        return 101
+    return max(student["id"] for student in students) + 1
+
 
 def add_student():
-    sid = str(get_next_id())
+    students = load_data()
+    sid = get_next_id(students)
+
     print(f"Auto Generated Student ID: {sid}")
 
     name = input("Name: ")
@@ -49,132 +65,132 @@ def add_student():
         print("Invalid phone!")
         return
 
-    filename = f"{DATA_FOLDER}/{sid}.txt"
-    with open(filename, "w") as f:
-        f.write(f"ID:{sid}\n")
-        f.write(f"Name:{name}\n")
-        f.write(f"Dept:{dept}\n")
-        f.write(f"Year:{year}\n")
-        f.write(f"Email:{email}\n")
-        f.write(f"Phone:{phone}\n")
-        f.write("Status:ACTIVE\n")
-        f.write(f"LastUpdated:{datetime.now()}\n")
+    new_student = {
+        "id": sid,
+        "name": name,
+        "dept": dept,
+        "year": int(year),
+        "email": email,
+        "phone": phone,
+        "status": "ACTIVE",
+        "lastUpdated": str(datetime.now())
+    }
+
+    students.append(new_student)
+    save_data(students)
 
     print("Student added successfully!")
 
+
 def view_student():
-    sid = input("Enter Student ID: ")
-    filename = f"{DATA_FOLDER}/{sid}.txt"
+    students = load_data()
+    sid = int(input("Enter Student ID: "))
 
-    if not os.path.exists(filename):
-        print("Student not found!")
-        return
+    for student in students:
+        if student["id"] == sid:
+            for key, value in student.items():
+                print(f"{key}: {value}")
+            return
 
-    print("\n----- STUDENT PROFILE -----")
-    with open(filename, "r") as f:
-        for line in f:
-            key, value = line.strip().split(":", 1)
-            print(f"{key:<12}: {value}")
-    print("---------------------------")
+    print("Student not found.")
+
 
 def list_students():
-    files = os.listdir(DATA_FOLDER)
-    if not files:
+    students = load_data()
+
+    if not students:
         print("No students found.")
         return
 
-    print("\n--- ALL STUDENTS ---")
-    for f in files:
-        with open(f"{DATA_FOLDER}/{f}", "r") as file:
-            lines = file.readlines()
-            sid = lines[0].split(":")[1].strip()
-            name = lines[1].split(":")[1].strip()
-            dept = lines[2].split(":")[1].strip()
-            print(f"{sid} - {name} ({dept})")
+    for student in students:
+        print(f'{student["id"]} - {student["name"]} ({student["dept"]})')
+
 
 def search_by_name():
+    students = load_data()
     keyword = input("Enter name to search: ").lower()
+
     found = False
 
-    for f in os.listdir(DATA_FOLDER):
-        with open(f"{DATA_FOLDER}/{f}", "r") as file:
-            lines = file.readlines()
-            name = lines[1].split(":")[1].strip().lower()
-            if keyword in name:
-                sid = lines[0].split(":")[1].strip()
-                print(f"Found: {sid} - {lines[1].split(':')[1].strip()}")
-                found = True
+    for student in students:
+        if keyword in student["name"].lower():
+            print(f'{student["id"]} - {student["name"]}')
+            found = True
 
     if not found:
         print("No matching student found.")
 
-def delete_student():
-    sid = input("Enter Student ID to delete: ")
-    src = f"{DATA_FOLDER}/{sid}.txt"
-    dest = f"{DELETED_FOLDER}/{sid}.txt"
 
-    if os.path.exists(src):
-        os.rename(src, dest)
-        print("Student moved to DeletedStudents (Soft Delete).")
-    else:
-        print("Student not found!")
 def update_student():
-    sid = input("Enter Student ID to update: ")
-    filename = f"{DATA_FOLDER}/{sid}.txt"
+    students = load_data()
+    sid = int(input("Enter Student ID to update: "))
 
-    if not os.path.exists(filename):
-        print("Student not found!")
-        return
+    for student in students:
+        if student["id"] == sid:
+            print("1. Name")
+            print("2. Department")
+            print("3. Year")
+            print("4. Email")
+            print("5. Phone")
 
-    with open(filename, "r") as f:
-        lines = f.readlines()
+            choice = input("Enter choice: ")
 
-    print("\nWhat do you want to update?")
-    print("1. Name")
-    print("2. Department")
-    print("3. Year")
-    print("4. Email")
-    print("5. Phone")
+            field_map = {
+                "1": "name",
+                "2": "dept",
+                "3": "year",
+                "4": "email",
+                "5": "phone"
+            }
 
-    choice = input("Enter choice: ")
+            if choice not in field_map:
+                print("Invalid choice!")
+                return
 
-    field_map = {
-        "1": "Name",
-        "2": "Dept",
-        "3": "Year",
-        "4": "Email",
-        "5": "Phone"
-    }
+            new_value = input("Enter new value: ")
 
-    if choice not in field_map:
-        print("Invalid choice!")
-        return
+            if field_map[choice] == "year":
+                if not validate_year(new_value):
+                    print("Invalid year!")
+                    return
+                new_value = int(new_value)
 
-    new_value = input(f"Enter new {field_map[choice]}: ")
+            student[field_map[choice]] = new_value
+            student["lastUpdated"] = str(datetime.now())
 
-    for i in range(len(lines)):
-        if lines[i].startswith(field_map[choice] + ":"):
-            lines[i] = f"{field_map[choice]}:{new_value}\n"
+            save_data(students)
+            print("Student updated successfully!")
+            return
 
-        if lines[i].startswith("LastUpdated:"):
-            lines[i] = f"LastUpdated:{datetime.now()}\n"
+    print("Student not found.")
 
-    with open(filename, "w") as f:
-        f.writelines(lines)
 
-    print("Student details updated successfully!")
+def delete_student():
+    students = load_data()
+    sid = int(input("Enter Student ID to delete: "))
 
-# ---------- Menu ----------
+    for student in students:
+        if student["id"] == sid:
+            student["status"] = "DELETED"
+            student["lastUpdated"] = str(datetime.now())
+            save_data(students)
+            print("Student soft deleted.")
+            return
+
+    print("Student not found.")
+
+
+# ----------------- Menu -----------------
 
 def menu():
     while True:
         print("\n===== STUDENT MANAGEMENT SYSTEM =====")
         print("1. Add Student")
-        print("2. View Student Profile")
-        print("3. List All Students")
-        print("4. Search Student by Name")
-        print("5. Update Student Details")
-        print("6. Delete Student (Soft Delete)")
+        print("2. View Student")
+        print("3. List Students")
+        print("4. Search by Name")
+        print("5. Update Student")
+        print("6. Delete Student")
         print("7. Exit")
 
         choice = input("Enter choice: ")
@@ -192,10 +208,10 @@ def menu():
         elif choice == "6":
             delete_student()
         elif choice == "7":
-            print("Exiting... Goodbye!")
+            print("Goodbye!")
             break
         else:
             print("Invalid choice!")
 
-menu()
 
+menu()
