@@ -11,10 +11,6 @@ A comprehensive system for managing student information efficiently.
 - Attendance tracking
 - Report generation
 
-
-- Attendance tracking
-- Report generation
-
 ## Getting Started
 
 
