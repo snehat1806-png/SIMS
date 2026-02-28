@@ -1,8 +1,0 @@
-ID:103
-Name:kaali
-Dept:it
-Year:1
-Email:ka23@gmail.com
-Phone:3454565678
-Status:ACTIVE
-LastUpdated:2026-01-26 21:46:59.989050

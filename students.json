@@ -1,0 +1,22 @@
+[
+    {
+        "id": 101,
+        "name": "sneha",
+        "dept": "cse",
+        "year": 2,
+        "email": "snt123@gmail.com",
+        "phone": "2342341234",
+        "status": "ACTIVE",
+        "lastUpdated": "2026-02-28 16:55:01.674672"
+    },
+    {
+        "id": 102,
+        "name": "isi",
+        "dept": "it",
+        "year": 1,
+        "email": "ishi@gmail.com",
+        "phone": "7898780956",
+        "status": "ACTIVE",
+        "lastUpdated": "2026-02-28 16:59:47.130210"
+    }
+]

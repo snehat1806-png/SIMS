@@ -1,8 +1,0 @@
-ID:102
-Name:ishi
-Dept:cse
-Year:1
-Email:ish67@gmail.com
-Phone:5674563452
-Status:ACTIVE
-LastUpdated:2026-01-26 21:46:13.323519
