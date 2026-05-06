@@ -40,10 +40,17 @@ def get_next_id(students):
     if not students:
         return 101
     return max(student["id"] for student in students) + 1
+def is_duplicate(students, email):
+        return any(s["email"] == email for s in students)
 
 
 def add_student():
     students = load_data()
+    if is_duplicate(students, email):
+      print("Student with this email already exists!")
+    return
+
+
     sid = get_next_id(students)
 
     print(f"Auto Generated Student ID: {sid}")
