@@ -1,0 +1,23 @@
+[33m7693086[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #3 from snehat1806-png/improve-email-validation
+[33mcb0f5ce[m updated version
+[33m312ee68[m[33m ([m[1;31morigin/improve-email-validation[m[33m, [m[1;32mimprove-email-validation[m[33m)[m Improved email validation using regex
+[33mcf7d2f6[m Improved email validation using regex
+[33m2ddba25[m commit features change
+[33m8805cea[m Restructured project and switched to JSON storage
+[33m988f1a6[m Migrated from file-based storage to JSON and fixed project structure
+[33m9002c33[m Add files via upload
+[33mdcc5286[m Add files via upload
+[33m15b3f9e[m Final cleanup before rebase
+[33mf18d344[m Format README for Student Information Management System
+[33mc74d8a3[m Add files via upload
+[33m24f0ae5[m Add files via upload
+[33mcd93472[m Add files via upload
+[33m0fe3904[m Merge branch 'main' of https://github.com/snehat1806-png/SIMS
+[33m61dc0ef[m Initial commit
+[33m8af6fb1[m Add files via upload
+[33me485d0d[m Add files via upload
+[33md5de319[m Resolved merge conflicts
+[33m3505070[m Student Management System
+[33m61170b3[m Enhance README with detailed project information
+[33m35de550[m main.py
+[33m0a6e1fb[m Initial commit
