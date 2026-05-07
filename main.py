@@ -7,7 +7,7 @@ while True:
     print("1. Add Student")
     print("2. List Students")
     print("3. Search Student")
-    print("3. Exit")
+    print("4. Exit")
 
     choice = input("Enter choice: ")
 

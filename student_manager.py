@@ -1,4 +1,5 @@
 import json
+import re
 from student import Student
 
 FILE_NAME = "students.json"
@@ -21,6 +22,9 @@ class StudentManager:
         if not students:
             return 101
         return max(student["id"] for student in students) + 1
+    def validate_email(self, email):
+      pattern = r'^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'
+      return re.fullmatch(pattern, email) is not None
     
     def list_students(self):
        students = self.load_data()
@@ -67,6 +71,10 @@ class StudentManager:
         dept = input("Department: ")
         year = int(input("Year: "))
         email = input("Email: ")
+
+        if not self.validate_email(email):
+         print("Invalid email format!")
+         return
         phone = input("Phone: ")
 
         student = Student(
