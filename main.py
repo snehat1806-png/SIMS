@@ -6,6 +6,7 @@ while True:
     print("\n===== STUDENT MANAGEMENT SYSTEM =====")
     print("1. Add Student")
     print("2. List Students")
+    print("3. Search Student")
     print("3. Exit")
 
     choice = input("Enter choice: ")
@@ -17,7 +18,11 @@ while True:
       manager.list_students()
 
     elif choice == "3":
-      break
+      manager.search_student()
+
+    elif choice == "4":
+      print("Exiting...")
+      break  
 
     else:
         print("Invalid choice!")

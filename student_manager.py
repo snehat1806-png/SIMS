@@ -37,6 +37,24 @@ class StudentManager:
             f'Name: {student["name"]} | '
             f'Department: {student["dept"]}'
         )
+    def search_student(self):
+      students = self.load_data()
+
+      keyword = input("Enter student name to search: ").lower()
+
+      found = False
+
+      for student in students:
+           if keyword in student["name"].lower():
+            print(
+                f'ID: {student["id"]} | '
+                f'Name: {student["name"]} | '
+                f'Department: {student["dept"]}'
+            )
+            found = True
+
+      if not found:
+        print("No matching student found.")
 
     def add_student(self):
         students = self.load_data()
